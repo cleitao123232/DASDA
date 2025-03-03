@@ -1,15 +1,13 @@
--- Configurações do Aimbot e ESP
 local config = {
-    teamCheck = true,  -- Verifica o time para não mirar em aliados  
-    fov = 35,  -- Tamanho do campo de visão (FOV)
-    smoothing = 1,  -- Suavização da mira
-    highlightEnabled = true,  -- Habilita o ESP
-    lockPart = "Head",  -- A mira será sempre na cabeça
-    ToggleKey = Enum.KeyCode.RightAlt,  -- Tecla 'Alt Direito' para abrir/fechar a GUI
-    espColor = Color3.fromRGB(255, 0, 0)  -- Cor padrão do ESP
+    teamCheck = true,  
+    fov = 35,  
+    smoothing = 1,  
+    highlightEnabled = true,  
+    lockPart = "Head",  
+    ToggleKey = Enum.KeyCode.RightAlt,  
+    espColor = Color3.fromRGB(255, 0, 0)  
 }
 
--- Whitelist embutida (nomes dos usuários)
 local whitelist = {
     "Itachi_cnp7", 
     "Player2", 
@@ -30,7 +28,6 @@ local ScreenGui
 local currentTargetHighlight
 local FOVring
 
--- Função para verificar se o jogador está na whitelist
 local function isWhitelisted(player)
     print("Verificando whitelist para o jogador: " .. player.Name)
     for _, username in ipairs(whitelist) do
@@ -43,7 +40,6 @@ local function isWhitelisted(player)
     return false
 end
 
--- Função para criar a GUI
 local function createGUI()
     if ScreenGui then
         ScreenGui:Destroy()
@@ -53,8 +49,8 @@ local function createGUI()
     ScreenGui.Name = "AimbotESP_GUI"
 
     local Frame = Instance.new("Frame", ScreenGui)
-    Frame.Size = UDim2.new(0, 600, 0, 500)
-    Frame.Position = UDim2.new(0.5, -300, 0.5, -250)
+    Frame.Size = UDim2.new(0, 600, 0, 300)
+    Frame.Position = UDim2.new(0.5, -300, 0.5, -150)
     Frame.Visible = true
     Frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 
@@ -84,35 +80,6 @@ local function createGUI()
     teamCheckButton.Position = UDim2.new(0, 10, 0, 150)
     teamCheckButton.Text = "Toggle Team Check"
     teamCheckButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-
-    local espColorButton = Instance.new("TextButton", Frame)
-    espColorButton.Size = UDim2.new(0, 580, 0, 30)
-    espColorButton.Position = UDim2.new(0, 10, 0, 190)
-    espColorButton.Text = "Change ESP Color"
-
-    local fovSliderLabel = Instance.new("TextLabel", Frame)
-    fovSliderLabel.Size = UDim2.new(0, 580, 0, 30)
-    fovSliderLabel.Position = UDim2.new(0, 10, 0, 230)
-    fovSliderLabel.Text = "FOV: " .. config.fov
-    fovSliderLabel.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-
-    local fovSlider = Instance.new("TextButton", Frame)
-    fovSlider.Size = UDim2.new(0, 580, 0, 30)
-    fovSlider.Position = UDim2.new(0, 10, 0, 270)
-    fovSlider.Text = "Adjust FOV"
-    fovSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
-    local smoothingLabel = Instance.new("TextLabel", Frame)
-    smoothingLabel.Size = UDim2.new(0, 580, 0, 30)
-    smoothingLabel.Position = UDim2.new(0, 10, 0, 310)
-    smoothingLabel.Text = "Smoothing: " .. config.smoothing
-    smoothingLabel.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
-
-    local smoothingSlider = Instance.new("TextButton", Frame)
-    smoothingSlider.Size = UDim2.new(0, 580, 0, 30)
-    smoothingSlider.Position = UDim2.new(0, 10, 0, 350)
-    smoothingSlider.Text = "Adjust Smoothing"
-    smoothingSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
     services.UserInputService.InputBegan:Connect(function(input, gameProcessed)
         if not gameProcessed and input.KeyCode == config.ToggleKey then
@@ -163,30 +130,6 @@ local function createGUI()
             teamCheckButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
         end
     end)
-
-    espColorButton.MouseButton1Click:Connect(function()
-        config.espColor = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
-        if espEnabled then
-            for _, player in pairs(services.Players:GetPlayers()) do
-                if player.Character then
-                    applyESP(player)
-                end
-            end
-        end
-    end)
-
-    fovSlider.MouseButton1Click:Connect(function()
-        config.fov = math.random(10, 100)
-        fovSliderLabel.Text = "FOV: " .. config.fov
-        if FOVring then
-            FOVring.Radius = config.fov
-        end
-    end)
-
-    smoothingSlider.MouseButton1Click:Connect(function()
-        config.smoothing = math.random(1, 10)
-        smoothingLabel.Text = "Smoothing: " .. config.smoothing
-    end)
 end
 
 if isWhitelisted(services.Players.LocalPlayer) then
@@ -200,8 +143,8 @@ if isWhitelisted(services.Players.LocalPlayer) then
     services.Players.LocalPlayer.CharacterAdded:Connect(onCharacterAdded)
 
     services.StarterGui:SetCore("SendNotification", {
-        Title = "Vip aimbot",
-        Text = "Aimbot e ESP!",
+        Title = "Free aimbot",
+        Text = "Free ESP e aimbot!",
         Duration = 5,
     })
 
